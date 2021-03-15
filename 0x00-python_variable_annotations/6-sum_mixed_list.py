@@ -9,7 +9,7 @@ def sum_mixed_list(mxd_lst: List[Union[float]]) -> float:
     METHOD: sum_mixed_list
     ----------------
     Description:
-            Takes in a list of floats and returns
-            the sum of elements as a float
+        Takes in a list of floats and returns
+        the sum of elements as a float
     """
     return sum(mxd_lst)
