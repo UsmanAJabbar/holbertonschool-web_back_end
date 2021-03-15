@@ -4,7 +4,7 @@ from typing import Sequence, Any, Union
 
 
 def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
-	""""
+	"""
 	--------------------------
 	METHOD: safe_first_element
 	--------------------------
