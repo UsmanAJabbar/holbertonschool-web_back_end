@@ -4,15 +4,15 @@ from typing import Sequence, Any, Union
 
 
 def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
-	"""
-	--------------------------
-	METHOD: safe_first_element
-	--------------------------
-	Description:
-		Returns the first element in any
-		iterable datatype
-	"""
-	if lst:
-		return lst[0]
-	else:
-		return None
+    """
+    --------------------------
+    METHOD: safe_first_element
+    --------------------------
+    Description:
+            Returns the first element in any
+            iterable datatype
+    """
+    if lst:
+        return lst[0]
+    else:
+        return None
