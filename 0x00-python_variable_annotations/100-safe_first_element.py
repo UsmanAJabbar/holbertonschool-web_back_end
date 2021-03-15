@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"Task requires us to add annotations"
+"""Task requires us to add annotations"""
 from typing import Sequence, Any, Union
 
 
