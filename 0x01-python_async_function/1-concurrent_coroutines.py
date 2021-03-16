@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Multiple coroutines"""
+import asyncio
+from typing import List
 
 
-async def wait_n(n: int, max_delay: int) -> list:
+async def wait_n(n: int, max_delay: int) -> List[float]:
     """
     --------------
     METHOD: wait_n
