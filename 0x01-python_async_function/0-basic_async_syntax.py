@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Await function"""
+from random import uniform
+from asyncio import sleep
 
 
 async def wait_random(max_delay: int = 10) -> float:
@@ -11,8 +13,6 @@ async def wait_random(max_delay: int = 10) -> float:
         Sets a temporary halt for a random duration
         between 0s and value set in @max_delay
     """
-    from random import uniform
-    from asyncio import sleep
 
     delay = uniform(0, max_delay)
     await sleep(delay)
