@@ -3,10 +3,10 @@
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """
     ----------------
-    CLASS: FIFOCache
+    CLASS: LIFOCache
     ----------------
     """
 
@@ -16,8 +16,8 @@ class FIFOCache(BaseCaching):
         MAGIC METHOD: __init__
         ----------------------
         Description:
-                Initializes the current
-                class object
+            Initializes the current
+            class object
         """
         super().__init__()
 
@@ -33,11 +33,18 @@ class FIFOCache(BaseCaching):
                 @key: key to add to the cache
                 @item: value to add to the cache
         """
+        if not key or not item:
+            return
+
+        if key in self.cache_data:
+            del self.cache_data[key]
+
         self.cache_data[key] = item
+
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            fifo_key = next(iter(self.cache_data))
-            print('DISCARD:', fifo_key)
-            del self.cache_data[fifo_key]
+            LIFO_key = list(self.cache_data)[-2]
+            print('DISCARD:', LIFO_key)
+            del self.cache_data[LIFO_key]
 
     def get(self, key):
         """
