@@ -64,7 +64,7 @@ class LRUCache(BaseCaching):
                     self.usage_count[k] += 1
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            LRU_key = max(self.cache_data, key=self.usage_count.get)
+            LRU_key = max(self.usage_count, key=self.usage_count.get)
             print('DISCARD:', LRU_key)
             del self.cache_data[LRU_key]
             del self.usage_count[LRU_key]
