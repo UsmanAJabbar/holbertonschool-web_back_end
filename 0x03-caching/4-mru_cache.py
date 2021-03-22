@@ -3,10 +3,10 @@
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LRUCache(BaseCaching):
+class MRUCache(BaseCaching):
     """
     ----------------
-    CLASS: LRUCache
+    CLASS: MRUCache
     ----------------
     """
     usage_count = {}
@@ -55,6 +55,9 @@ class LRUCache(BaseCaching):
         - If self.cache has more than 4 elements
         - Remove the item with the highest count
         """
+        if self.usage_count:
+            MRU_key = min(self.usage_count, key=self.usage_count.get)
+
         self.cache_data[key] = item
         self.usage_count[key] = 0
 
@@ -64,10 +67,9 @@ class LRUCache(BaseCaching):
                     self.usage_count[k] += 1
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            LRU_key = max(self.usage_count, key=self.usage_count.get)
-            print('DISCARD:', LRU_key)
-            del self.cache_data[LRU_key]
-            del self.usage_count[LRU_key]
+            print('DISCARD:', MRU_key)
+            del self.cache_data[MRU_key]
+            del self.usage_count[MRU_key]
 
     def get(self, key):
         """
@@ -83,4 +85,9 @@ class LRUCache(BaseCaching):
         """
         if not key or key not in self.cache_data:
             return None
+
+        self.usage_count[key] = 0
+        for k, v in self.usage_count.items():
+            if k != key:
+                self.usage_count[k] += 1
         return self.cache_data[key]
