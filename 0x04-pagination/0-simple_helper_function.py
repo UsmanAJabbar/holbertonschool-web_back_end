@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Index Range"""
 
 
 def index_range(page: int, page_size: int) -> tuple:
