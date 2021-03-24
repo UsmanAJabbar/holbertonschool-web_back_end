@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Server Object"""
 from typing import List
 import math
 import csv
