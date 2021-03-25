@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Server Object"""
-from typing import List
+from typing import List, Dict
 import csv
 index_range = __import__('0-simple_helper_function').index_range
 
@@ -43,7 +43,7 @@ class Server:
 
         return self.dataset()[start:end]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         """
         ----------------
         METHOD: get_page

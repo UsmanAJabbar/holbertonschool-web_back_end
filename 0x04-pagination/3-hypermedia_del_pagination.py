@@ -49,8 +49,7 @@ class Server:
         """
         assert type(index) == int
         assert type(page_size) == int
-        assert index > 0
-        assert index < len(self.data_rows)
+        assert 0 <= index < len(self.data_rows)
 
         start, end = index, index + page_size
         schema = {
