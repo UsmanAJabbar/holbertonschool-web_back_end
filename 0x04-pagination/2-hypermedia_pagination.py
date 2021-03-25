@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Server Object"""
 from typing import List
-import math
 import csv
 index_range = __import__('0-simple_helper_function').index_range
 
@@ -12,6 +11,9 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        """
+        init
+        """
         self.__dataset = None
 
     def dataset(self) -> List[List]:

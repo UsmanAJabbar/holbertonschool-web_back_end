@@ -23,6 +23,9 @@ class Server:
         return self.__dataset
 
     def __init__(self):
+        """
+        INIT
+        """
         self.__dataset = None
         self.data_rows = self.dataset()
         self.__indexed_dataset = None
