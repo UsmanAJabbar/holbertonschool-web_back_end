@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from typing import List
 from re import sub as regex
-
+import logging
 
 def filter_datum(field: List[str], redaction: str, message: str, seperator: str) -> str:
     """
@@ -23,3 +23,21 @@ def filter_datum(field: List[str], redaction: str, message: str, seperator: str)
                         f"{fieldname}={redaction}{seperator}",
                         message)
     return message
+
+class RedactingFormatter(logging.Formatter):
+    """ Redacting Formatter class"""
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
+
+    def __init__(self, fields):
+        """Initialize"""
+        self.fields = list(fields)
+        super(RedactingFormatter, self).__init__(self.FORMAT)
+
+    def format(self, record: logging.LogRecord) -> str:
+        """Format method that redacts sensitive information"""
+        return filter_datum(self.fields,
+                            self.REDACTION,
+                            super().format(record),
+                            self.SEPARATOR)
