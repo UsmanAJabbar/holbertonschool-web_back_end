@@ -16,3 +16,20 @@ def hash_password(password: str) -> bytes:
 
     password, salt = bytes(password.encode('UTF-8')), bytes(gensalt())
     return hashpw(password, salt)
+
+
+def is_valid(hashed_password: bytes, password: str) -> bool:
+    """
+    ----------------
+    METHOD: is_valid
+    ----------------
+    Description:
+        Validates whether a given password is
+        actually valid
+    Args:
+        @hashed_password: hashed password
+        @password: original password
+    """
+    from bcrypt import checkpw
+
+    return checkpw(password.encode('UTF-8'), hashed_password)
