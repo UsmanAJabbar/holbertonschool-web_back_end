@@ -5,6 +5,7 @@ import logging
 from mysql.connector import connect as conn
 PII_FIELDS = ('name', 'email', 'ssn', 'phone', 'password')
 
+
 def filter_datum(field: List[str],
                  redaction: str,
                  message: str,
@@ -29,6 +30,7 @@ def filter_datum(field: List[str],
                         message)
     return message
 
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class"""
     REDACTION = "***"
@@ -46,6 +48,7 @@ class RedactingFormatter(logging.Formatter):
                             self.REDACTION,
                             super().format(record),
                             self.SEPARATOR)
+
 
 def get_logger() -> logging.Logger:
     """
@@ -76,6 +79,21 @@ def get_db() -> conn:
     from os import environ as env
 
     b = 'PERSONAL_DATA_DB_'
-    usr, pwd, host, db = env[b+'USERNAME'], env[b+'PASSWORD'], env[b+'HOST'], env[b+'NAME']
+    usr, pwd, host, db = env[b+'USERNAME'], env[b +
+                                                'PASSWORD'], env[b+'HOST'], env[b+'NAME']
 
     return conn(user=usr, password=pwd, host=host, database=db)
+
+
+def main():
+    """Main"""
+    db_data = get_db()
+    db_query = db_data.cursor()
+    db_query.execute('SELECT * FROM users;')
+
+    log = get_logger()
+    for rows in db_query:
+        print(rows)
+
+
+main():
