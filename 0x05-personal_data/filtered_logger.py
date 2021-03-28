@@ -2,9 +2,13 @@
 from typing import List
 from re import sub as regex
 import logging
+from mysql.connector import connect as conn
 PII_FIELDS = ('name', 'email', 'ssn', 'phone', 'password')
 
-def filter_datum(field: List[str], redaction: str, message: str, seperator: str) -> str:
+def filter_datum(field: List[str],
+                 redaction: str,
+                 message: str,
+                 seperator: str) -> str:
     """
     --------------------
     METHOD: filter_datum
@@ -58,3 +62,20 @@ def get_logger() -> logging.Logger:
     logger.addHandler(handler)
 
     return logger
+
+
+def get_db() -> conn:
+    """
+    --------------
+    METHOD: get_db
+    --------------
+    Description:
+        Takes no arguments, but returns
+        a connection to the database.
+    """
+    from os import environ as env
+
+    b = 'PERSONAL_DATA_DB_'
+    usr, pwd, host, db = env[b+'USERNAME'], env[b+'PASSWORD'], env[b+'HOST'], env[b+'NAME']
+
+    return conn(user=usr, password=pwd, host=host, database=db)
