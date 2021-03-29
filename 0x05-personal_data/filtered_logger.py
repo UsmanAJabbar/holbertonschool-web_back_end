@@ -7,7 +7,7 @@ import mysql.connector
 PII_FIELDS = ('name', 'email', 'ssn', 'phone', 'password')
 
 
-def filter_datum(field: List[str],
+def filter_datum(fields: List[str],
                  redaction: str,
                  message: str,
                  seperator: str) -> str:
