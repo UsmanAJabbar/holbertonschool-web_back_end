@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unneeded doc"""
+"""Unneeded really really long doc"""
 from typing import List
 import re
 import logging
@@ -38,7 +38,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields):
+    def __init__(self, fields: List[str]):
         """Initialize"""
         self.fields = list(fields)
         super(RedactingFormatter, self).__init__(self.FORMAT)
