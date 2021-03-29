@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Doc"""
 from typing import List
 from re import sub as regex
 import logging
@@ -79,8 +80,7 @@ def get_db() -> conn:
     from os import environ as env
 
     b = 'PERSONAL_DATA_DB_'
-    usr, pwd, host, db = env[b+'USERNAME'], env[b +
-                                                'PASSWORD'], env[b+'HOST'], env[b+'NAME']
+    usr, pwd, host, db = env[b+'USERNAME'], env[b+'PASSWORD'], env[b+'HOST'], env[b+'NAME']
 
     return conn(user=usr, password=pwd, host=host, database=db)
 
@@ -91,9 +91,8 @@ def main():
     db_query = db_data.cursor()
     db_query.execute('SELECT * FROM users;')
 
-    log = get_logger()
     for rows in db_query:
-        print(rows)
+        print(''.join(str(rows)))
 
 
-main():
+main()
