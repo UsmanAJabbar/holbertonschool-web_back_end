@@ -90,7 +90,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                    database=db)
 
 
-def main():
+if __name__ == "main":
     """Main"""
     db_data = get_db()
     db_query = db_data.cursor()
@@ -98,6 +98,3 @@ def main():
 
     for rows in db_query:
         print(''.join(str(rows)))
-
-
-main()
