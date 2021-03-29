@@ -3,7 +3,7 @@
 from typing import List
 from re import sub as regex
 import logging
-from mysql.connector import connect as conn
+import mysql.connector
 PII_FIELDS = ('name', 'email', 'ssn', 'phone', 'password')
 
 
@@ -61,14 +61,14 @@ def get_logger() -> logging.Logger:
     logger.setLevel(logging.INFO)
     logger.propagate = False
 
-    handler = logging.StreamHandler(RedactingFormatter(fields=PII_FIELDS))
+    handler = logging.StreamHandler()
+    handler.setFormatter(RedactingFormatter(fields=PII_FIELDS))
 
     logger.addHandler(handler)
-
     return logger
 
 
-def get_db() -> conn:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """
     --------------
     METHOD: get_db
@@ -79,10 +79,15 @@ def get_db() -> conn:
     """
     from os import environ as env
 
-    b = 'PERSONAL_DATA_DB_'
-    usr, pwd, host, db = env[b+'USERNAME'], env[b+'PASSWORD'], env[b+'HOST'], env[b+'NAME']
+    usr = env['PERSONAL_DATA_DB_USERNAME']
+    pwd = env['PERSONAL_DATA_DB_PASSWORD']
+    host = env['PERSONAL_DATA_DB_HOST']
+    db = env['PERSONAL_DATA_DB_NAME']
 
-    return conn(user=usr, password=pwd, host=host, database=db)
+    return mysql.connector.connect(user=usr,
+                                   password=pwd,
+                                   host=host,
+                                   database=db)
 
 
 def main():
