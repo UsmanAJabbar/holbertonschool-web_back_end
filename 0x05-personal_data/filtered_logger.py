@@ -12,18 +12,7 @@ def filter_datum(field: List[str],
                  message: str,
                  seperator: str) -> str:
     """
-    --------------------
-    METHOD: filter_datum
-    --------------------
-    Description:
-        Takes in a number of parameters with
-        seperators and returns the data that
-        needs to be obfuscated as a string
-    Args:
-        @fields    : list of strings with fields to obfuscate.
-        @redaction : string representing what to obfuscate with.
-        @message   : string representing the log line.
-        @separator : seperator seperating individual fields.
+    Some random doc
     """
     for fieldname in field:
         message = regex(f'{fieldname}=.+?{seperator}',
