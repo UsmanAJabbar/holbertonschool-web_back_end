@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Doc"""
 from typing import List
-from re import sub as regex
+import re
 import logging
 import mysql.connector
 PII_FIELDS = ('name', 'email', 'ssn', 'phone', 'password')
@@ -12,12 +12,23 @@ def filter_datum(field: List[str],
                  message: str,
                  seperator: str) -> str:
     """
-    Some random doc
+    --------------------
+    METHOD: filter_datum
+    --------------------
+    Description:
+        Takes in a number of parameters with
+        seperators and returns the data that
+        needs to be obfuscated as a string
+    Args:
+        @fields    : list of strings with fields to obfuscate.
+        @redaction : string representing what to obfuscate with.
+        @message   : string representing the log line.
+        @separator : seperator seperating individual fields.
     """
     for fieldname in field:
-        message = regex(f'{fieldname}=.+?{seperator}',
-                        f"{fieldname}={redaction}{seperator}",
-                        message)
+        message = re.sub(f'{fieldname}=.+?{seperator}',
+                         f"{fieldname}={redaction}{seperator}",
+                         message)
     return message
 
 
