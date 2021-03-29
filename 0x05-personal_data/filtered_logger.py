@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Unneeded really really long doc"""
 from typing import List
-from os import env
+import os
 import re
 import logging
 import mysql.connector
@@ -80,10 +80,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     """
     from os import environ as env
 
-    usr = env['PERSONAL_DATA_DB_USERNAME']
-    pwd = env['PERSONAL_DATA_DB_PASSWORD']
-    host = env['PERSONAL_DATA_DB_HOST']
-    db = env['PERSONAL_DATA_DB_NAME']
+    usr = os.env['PERSONAL_DATA_DB_USERNAME']
+    pwd = os.env['PERSONAL_DATA_DB_PASSWORD']
+    host = os.env['PERSONAL_DATA_DB_HOST']
+    db = os.env['PERSONAL_DATA_DB_NAME']
 
     return mysql.connector.connect(user=usr,
                                    password=pwd,
