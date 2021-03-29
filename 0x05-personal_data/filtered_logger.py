@@ -5,7 +5,7 @@ from os import env
 import re
 import logging
 import mysql.connector
-PII_FIELDS = ('name', 'email', 'ssn', 'phone', 'password')
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 
 def filter_datum(fields: List[str],
