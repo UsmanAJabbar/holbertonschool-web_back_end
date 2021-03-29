@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Unneeded really really long doc"""
 from typing import List
+from os import env
 import re
 import logging
 import mysql.connector
@@ -39,7 +40,7 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
-        """Initialize"""
+        """Initializes a redacting formatter"""
         self.fields = list(fields)
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
@@ -91,7 +92,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 if __name__ == "main":
-    """Main"""
+    """Main function for some reason"""
     db_data = get_db()
     db_query = db_data.cursor()
     db_query.execute('SELECT * FROM users;')
