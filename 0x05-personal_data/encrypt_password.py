@@ -15,7 +15,7 @@ def hash_password(password: str) -> bytes:
     """
     from bcrypt import hashpw, gensalt
 
-    password, salt = bytes(password.encode()), gensalt()
+    password, salt = bytes(password), gensalt()
     return hashpw(password, salt)
 
 
