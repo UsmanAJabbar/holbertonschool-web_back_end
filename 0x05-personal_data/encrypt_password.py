@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Some random docstring"""
 
 
 def hash_password(password: str) -> bytes:
