@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Some random docstring"""
 
 
 def hash_password(password: str) -> bytes:
@@ -14,7 +15,7 @@ def hash_password(password: str) -> bytes:
     """
     from bcrypt import hashpw, gensalt
 
-    password, salt = bytes(password.encode('UTF-8')), bytes(gensalt())
+    password, salt = bytes(password.encode()), gensalt()
     return hashpw(password, salt)
 
 
