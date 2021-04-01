@@ -71,15 +71,21 @@ class BasicAuth(Auth):
         METHOD: user_object_from_credentials
         ------------------------------------
         """
-        if user_email and user_pwd:
+        if type(user_email) is str and type(user_pwd) is pwd:
             user = User.search({'email': user_email})
             if user and user[0] and user[0].is_valid_password(user_pwd):
                 return user[0]
-        return None
     
-    # def current_user(self, request=None) -> TypeVar('User'):
-    #     """
-    #     --------------------
-    #     METHOD: current_user
-    #     --------------------
-    #     """
+    def current_user(self, request=None) -> TypeVar('User'):
+        """
+        --------------------
+        METHOD: current_user
+        --------------------
+        """
+        if request:
+            auth_header = self.authorization_header(request)
+            b64_key = self.extract_base64_authorization_header(auth_header)
+            u_p = self.decode_base64_authorization_header(b64_key)
+            user, pwd = self.extract_user_credentials(u_p)
+            user_instance = self.user_object_from_credentials(user, pwd)
+            return user_instance
