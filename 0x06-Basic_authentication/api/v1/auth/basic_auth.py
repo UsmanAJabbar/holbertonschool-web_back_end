@@ -71,7 +71,7 @@ class BasicAuth(Auth):
         METHOD: user_object_from_credentials
         ------------------------------------
         """
-        if type(user_email) is str and type(user_pwd) is pwd:
+        if type(user_email) is str and type(user_pwd) is str:
             user = User.search({'email': user_email})
             if user and user[0] and user[0].is_valid_password(user_pwd):
                 return user[0]
