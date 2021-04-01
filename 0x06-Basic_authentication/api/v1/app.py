@@ -20,12 +20,13 @@ else:
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
+
 @app.before_request
 def before_request():
     """ Handles checks before requests are passed on """
     if not auth:
         return
-    
+
     path = request.path
     excluded_paths = ['/api/v1/status/',
                       '/api/v1/unauthorized/',
@@ -45,15 +46,18 @@ def not_found(error) -> str:
     """
     return jsonify({"error": "Not found"}), 404
 
+
 @app.errorhandler(401)
 def not_authorized(error) -> str:
     """ Not authorized """
     return jsonify({"error": "Unauthorized"}), 401
 
+
 @app.errorhandler(403)
 def forbidden(error) -> str:
     """ forbidden handler """
     return jsonify({"error": "Forbidden"}), 403
+
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
