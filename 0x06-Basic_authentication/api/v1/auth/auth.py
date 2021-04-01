@@ -17,8 +17,31 @@ class Auth:
         METHOD: require_auth
         --------------------
         """
-        return not path or not excluded_paths or\
-            path not in excluded_paths and\
+        if not path or not excluded_paths:
+            return True
+
+        def _asterisk(excluded_paths: list) -> list:
+            """
+            ---------------
+            Returns a list of strings that end in '*'/
+            ---------------
+            """
+            asterisked = []
+            for path in excluded_paths:
+                if path[-1] == '*':
+                    asterisked.append(path[:-1])
+            return asterisked
+
+        ast = _asterisk(excluded_paths)
+        if ast:
+            if path[-1] == '/':
+                path = path[-1]
+            for path_wo_ast in ast:
+                if path_wo_ast in path:
+                    return False
+            return True
+
+        return path not in excluded_paths and\
             f'{path}/' not in excluded_paths
 
     def authorization_header(self, request=None) -> str:
