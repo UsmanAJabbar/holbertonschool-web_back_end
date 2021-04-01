@@ -18,8 +18,8 @@ class Auth:
         --------------------
         """
         return not path or not excluded_paths or\
-               path not in excluded_paths and\
-               f'{path}/' not in excluded_paths
+            path not in excluded_paths and\
+            f'{path}/' not in excluded_paths
 
     def authorization_header(self, request=None) -> str:
         """
