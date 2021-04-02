@@ -11,13 +11,13 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 def filter_datum(fields: List[str],
                  redaction: str,
                  message: str,
-                 seperator: str) -> str:
+                 separator: str) -> str:
     """
     Some random doc
     """
     for fieldname in fields:
-        message = re.sub(f'{fieldname}=.+?{seperator}',
-                         f"{fieldname}={redaction}{seperator}",
+        message = re.sub(f'{fieldname}=.+?{separator}',
+                         f"{fieldname}={redaction}{separator}",
                          message)
     return message
 
