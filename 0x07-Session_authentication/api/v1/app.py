@@ -23,7 +23,6 @@ elif auth == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
 
-
 @app.before_request
 def before_request():
     """ Handles checks before requests are passed on """
@@ -48,7 +47,6 @@ def before_request():
             abort(403)
 
         request.current_user = user
-
 
 @app.errorhandler(404)
 def not_found(error) -> str:
