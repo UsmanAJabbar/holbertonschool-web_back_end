@@ -32,7 +32,7 @@ class DB:
         Description:
             Adds a user to the database
         """ 
-        if type(email) is str and type(hashed_password) is str:
+        if type(email) is str and type(hashed_password) in [str, bytes]:
             from user import User
             user = User(email=email, hashed_password=hashed_password)
             self._session.add(user)

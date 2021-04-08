@@ -21,6 +21,18 @@ def _hash_password(password: str) -> str:
     return bcrypt.hashpw(pwd, salt)
 
 
+def _generate_uuid() -> str:
+    """
+    ----------------------
+    METHOD: _generate_uuid
+    ----------------------
+    Description:
+        Generates and returns a UUID
+    """
+    from uuid import uuid4
+    return uuid4()
+
+
 class Auth:
     """Auth class to interact with the authentication database """
 
@@ -45,7 +57,7 @@ class Auth:
                 self._db.find_user_by(email=email)
                 raise ValueError(f'User {email} already exists')
             except NoResultFound:
-                user = self._db.add_user(email, str(_hash_password(password)))
+                user = self._db.add_user(email, _hash_password(password))
                 return user
     
 
@@ -60,8 +72,10 @@ class Auth:
         """
         import bcrypt
 
-        try:
-            user = self._db.find_user_by(email=email)
-            return bcrypt.checkpw(password.encode(), user.hashed_password)
-        except NoResultFound:
-            return False
+        if type(email) is str and type(password) is str:
+            try:
+                user = self._db.find_user_by(email=email)
+                return bcrypt.checkpw(password.encode(), user.hashed_password)
+            except NoResultFound:
+                return False
+        return False
