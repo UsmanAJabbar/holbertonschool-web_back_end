@@ -80,6 +80,7 @@ def logout():
         if user:
             AUTH.destroy_session(user.user_id)
             return redirect('/')
+
     abort(403)
 
 
@@ -98,7 +99,8 @@ def profile():
     if session_id:
         user = AUTH.get_user_from_session_id(session_id)
         if user:
-            return jsonify({"email": "<user email>"}), 200
+            return jsonify({"email": user.email}), 200
+
     abort(403)
 
 
