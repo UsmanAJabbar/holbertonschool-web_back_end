@@ -127,7 +127,6 @@ class Auth:
         if user_id:
             try:
                 user = self._db.find_user_by(user_id=user_id)
-                self._db._session.delete(user)
-                self._db._session.commit()
+                self._db.update_user(user.user_id, session_id=None)
             except NoResultFound:
                 pass
