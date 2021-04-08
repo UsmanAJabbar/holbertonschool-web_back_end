@@ -79,7 +79,8 @@ class Auth:
             except NoResultFound:
                 return False
         return False
-    
+
+
     def create_session(self, email: str) -> str:
         """
         ----------------------
@@ -96,3 +97,37 @@ class Auth:
                 return session_id
             except NoResultFound:
                 return None
+    
+
+    def get_user_from_session_id(self, session_id: str):
+        """
+        --------------------------------
+        METHOD: get_user_from_session_id
+        --------------------------------
+        Description:
+            Takes in a session ID and returns
+            the user, otherwise none
+        """
+        if session_id and type(session_id) is str:
+            try:
+                return self._db.find_user_by(session_id=session_id)
+            except NoResultFound:
+                pass
+    
+
+    def destroy_session(self, user_id: int) -> None:
+        """
+        -----------------------
+        METHOD: destroy_session
+        -----------------------
+        Description:
+            Destroys a user session based from a given
+            user_id.
+        """
+        if user_id:
+            try:
+                user = self._db.find_user_by(user_id=user_id)
+                self._db._session.delete(user)
+                self._db._session.commit()
+            except NoResultFound:
+                pass

@@ -39,5 +39,30 @@ def users():
             return jsonify({"message": "email already registered"}), 400
 
 
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login():
+    """
+    -------------
+    METHOD: login
+    -------------
+    Description:
+        Takes in a username and password from a post
+        request to the API and returns whether the
+        login with the given details was successful.
+    """
+    post_data = dict(request.form)
+
+    if post_data and 'email' in post_data and 'password' in post_data:
+        if AUTH.valid_login(post_data['email'], post_data['password']):
+
+            session_id = AUTH.create_session(post_data['email'])
+            login = jsonify({"email": post_data['email'],
+                             "message": "logged in"})
+            login.set_cookie('session_id', session_id)
+            return login, 200
+
+    from flask import abort
+    abort(401)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
