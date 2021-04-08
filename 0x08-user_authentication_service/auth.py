@@ -126,8 +126,8 @@ class Auth:
         """
         if user_id:
             try:
-                user = self._db.find_user_by(user_id=user_id)
-                self._db.update_user(user.user_id, session_id=None)
+                user = self._db.find_user_by(id=user_id)
+                self._db.update_user(user.id, session_id=None)
             except NoResultFound:
                 pass
 
@@ -144,7 +144,7 @@ class Auth:
             try:
                 user = self._db.find_user_by(email=email)
                 reset_token = _generate_uuid()
-                self._db.update_user(user.user_id, reset_token=reset_token)
+                self._db.update_user(user.id, reset_token=reset_token)
                 return reset_token
             except NoResultFound:
                 raise ValueError
@@ -161,7 +161,7 @@ class Auth:
         if type(reset_token) is str and type(password) is str:
             try:
                 user = self._db.find_user_by(reset_token=reset_token)
-                self._db.update_user(user.user_id,
+                self._db.update_user(user.id,
                                      hashed_password=_hash_password(password),
                                      reset_token=None)
             except NoResultFound:
