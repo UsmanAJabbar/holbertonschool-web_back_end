@@ -132,7 +132,7 @@ class Auth:
                 pass
 
 
-    def get_reset_password_token(email: str) -> str:
+    def get_reset_password_token(self, email: str) -> str:
         """
         --------------------------------
         METHOD: get_reset_password_token
