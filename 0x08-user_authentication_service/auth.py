@@ -30,7 +30,7 @@ def _generate_uuid() -> str:
         Generates and returns a UUID
     """
     from uuid import uuid4
-    return uuid4()
+    return str(uuid4())
 
 
 class Auth:
@@ -79,3 +79,20 @@ class Auth:
             except NoResultFound:
                 return False
         return False
+    
+    def create_session(self, email: str) -> str:
+        """
+        ----------------------
+        METHOD: create_session
+        ----------------------
+        Description:
+            Creates and returns a new session ID
+        """
+        if type(email) is str:
+            try:
+                user = self._db.find_user_by(email=email)
+                session_id = _generate_uuid()
+                setattr(user, 'session_id', session_id)
+                return session_id
+            except NoResultFound:
+                return None
