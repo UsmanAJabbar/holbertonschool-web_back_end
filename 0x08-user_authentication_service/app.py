@@ -74,16 +74,31 @@ def logout():
         Takes in a username and password
         and deletes a session
     """
-    post_data = dict(request.form)
+    session_id = request.cookies.get('session_id')
+    if session_id:
+        user = AUTH.get_user_from_session_id(session_id)
+        if user:
+            AUTH.destroy_session(user.user_id)
+            return redirect('/')
+    abort(403)
 
-    if post_data and 'email' in post_data and 'password' in post_data:
-        if AUTH.valid_login(post_data['email'], post_data['password']):
-            session_id = request.cookies.get('session_id')
-            if session_id:
-                user = AUTH.get_user_from_session_id(session_id)
-                if user:
-                    AUTH.destroy_session(user.user_id)
-                    return redirect('/')
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile():
+    """
+    ---------------
+    METHOD: profile
+    ---------------
+    Description:
+        Returns a the email of a user from
+        a given session_id embedded in the
+        cookies of the request
+    """
+    session_id = request.cookies.get('session_id')
+    if session_id:
+        user = AUTH.get_user_from_session_id(session_id)
+        if user:
+            return jsonify({"email": "<user email>"}), 200
     abort(403)
 
 
