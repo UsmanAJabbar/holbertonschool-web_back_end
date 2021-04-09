@@ -15,14 +15,12 @@ class DB:
         Base.metadata.create_all(self._engine)
         self.__session = None
 
-
     @property
     def _session(self):
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
-    
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """
@@ -31,14 +29,13 @@ class DB:
         ----------------
         Description:
             Adds a user to the database
-        """ 
+        """
         if type(email) is str and type(hashed_password) in [str, bytes]:
             from user import User
             user = User(email=email, hashed_password=hashed_password)
             self._session.add(user)
             self._session.commit()
             return user
-    
 
     def find_user_by(self, **kwargs: dict):
         """
@@ -61,7 +58,6 @@ class DB:
         if data:
             return data
         raise NoResultFound
-    
 
     def update_user(self, user_id: int, **kwargs: dict) -> None:
         """

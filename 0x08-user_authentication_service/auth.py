@@ -36,10 +36,8 @@ def _generate_uuid() -> str:
 class Auth:
     """Auth class to interact with the authentication database """
 
-
     def __init__(self):
         self._db = DB()
-
 
     def register_user(self, email: str, password: str) -> User:
         """
@@ -59,7 +57,6 @@ class Auth:
             except NoResultFound:
                 user = self._db.add_user(email, _hash_password(password))
                 return user
-    
 
     def valid_login(self, email: str, password: str) -> bool:
         """
@@ -80,7 +77,6 @@ class Auth:
                 return False
         return False
 
-
     def create_session(self, email: str) -> str:
         """
         ----------------------
@@ -97,7 +93,6 @@ class Auth:
                 return session_id
             except NoResultFound:
                 return None
-    
 
     def get_user_from_session_id(self, session_id: str):
         """
@@ -113,7 +108,6 @@ class Auth:
                 return self._db.find_user_by(session_id=session_id)
             except NoResultFound:
                 pass
-    
 
     def destroy_session(self, user_id: int) -> None:
         """
@@ -131,7 +125,6 @@ class Auth:
             except NoResultFound:
                 pass
 
-
     def get_reset_password_token(self, email: str) -> str:
         """
         --------------------------------
@@ -148,7 +141,6 @@ class Auth:
                 return reset_token
             except NoResultFound:
                 raise ValueError
-    
 
     def update_password(self, reset_token: str, password: str) -> None:
         """

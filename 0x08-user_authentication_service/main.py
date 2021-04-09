@@ -13,13 +13,15 @@ def register_user(email: str, password: str) -> None:
 
 def log_in_wrong_password(email: str, password: str) -> None:
     """ Login Bad Password """
-    ping = post(f'{ENDPOINT}/sessions', data=dict(email=email, password=password))
+    ping = post(f'{ENDPOINT}/sessions', data=dict(email=email,
+                                                  password=password))
     assert ping.status_code == 401, 'Logged in with the bad pass'
 
 
 def log_in(email: str, password: str) -> str:
     """ Login Good Password """
-    ping = post(f'{ENDPOINT}/sessions', data=dict(email=email, password=password))
+    ping = post(f'{ENDPOINT}/sessions', data=dict(email=email,
+                                                  password=password))
     assert ping.status_code == 200, 'Good login failed'
     return ping.cookies['session_id']
 
@@ -52,7 +54,9 @@ def reset_password_token(email: str) -> str:
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     """ Updates a user containing a reset token with a new password """
     ping = put(f'{ENDPOINT}/reset_password',
-               data=dict(email=email, reset_token=reset_token, new_password=new_password))
+               data=dict(email=email,
+                         reset_token=reset_token,
+                         new_password=new_password))
     assert ping.status_code == 200, 'Failed to update the password'
 
 
