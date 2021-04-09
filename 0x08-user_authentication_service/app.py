@@ -144,7 +144,7 @@ def update_password():
     if 'email' in pdata and 'reset_token' in pdata and 'new_password' in pdata:
         try:
             user = AUTH._db.find_user_by(reset_token=reset_token)
-            if user.reset_token = pdata['reset_token']:
+            if user.reset_token == pdata['reset_token']:
                 AUTH.update_password(user.reset_token, pdata['new_password'])
                 return jsonify({"email": user.email,
                                 "message": "Password updated"}), 200
