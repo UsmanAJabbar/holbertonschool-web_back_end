@@ -81,7 +81,6 @@ def logout():
         if user:
             AUTH.destroy_session(user.id)
             return redirect('/')
-
     abort(403)
 
 
@@ -101,7 +100,6 @@ def profile():
         user = AUTH.get_user_from_session_id(session_id)
         if user:
             return jsonify({"email": user.email}), 200
-
     abort(403)
 
 
@@ -112,8 +110,8 @@ def reset_password():
     METHOD: reset_password
     ----------------------
     Description:
-        Gets a user and returns the reset
-        token.
+        Gets a user, generates and assigns the reset_tokken,
+        and returns the reset token.
     """
     post_data = dict(request.form)
 
@@ -143,7 +141,7 @@ def update_password():
 
     if 'email' in pdata and 'reset_token' in pdata and 'new_password' in pdata:
         try:
-            user = AUTH._db.find_user_by(reset_token=reset_token)
+            user = AUTH._db.find_user_by(reset_token=pdata['reset_token'])
             if user.reset_token == pdata['reset_token']:
                 AUTH.update_password(user.reset_token, pdata['new_password'])
                 return jsonify({"email": user.email,
