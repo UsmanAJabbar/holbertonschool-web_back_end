@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ Basic Flask App """
 from flask import Flask, jsonify, request, abort, redirect
+from sqlalchemy.orm.exc import NoResultFound
 from auth import Auth
 app = Flask(__name__)
 AUTH = Auth()
@@ -123,6 +124,31 @@ def reset_password():
             return jsonify({"email": user.email,
                             "reset_token": reset_token}), 200
         except ValueError:
+            pass
+    abort(403)
+
+
+@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+def update_password():
+    """
+    -----------------------
+    METHOD: update_password
+    -----------------------
+    Description:
+        Updates the password from a
+        put request to the /reset_password
+        API.
+    """
+    pdata = dict(request.form)
+
+    if 'email' in pdata and 'reset_token' in pdata and 'new_password' in pdata:
+        try:
+            user = AUTH._db.find_user_by(reset_token=reset_token)
+            if user.reset_token = pdata['reset_token']:
+                AUTH.update_password(user.reset_token, pdata['new_password'])
+                return jsonify({"email": user.email,
+                                "message": "Password updated"}), 200
+        except NoResultFound:
             pass
     abort(403)
 
