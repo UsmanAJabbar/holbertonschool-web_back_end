@@ -37,7 +37,7 @@ class DB:
             self._session.commit()
             return user
 
-    def find_user_by(self, **kwargs: dict):
+    def find_user_by(self, **kwargs: dict) -> User:
         """
         ---------------------
         METHODS: find_user_by
@@ -54,8 +54,10 @@ class DB:
             if not hasattr(User, key):
                 raise InvalidRequestError
 
-        data = self._session.query(User).filter_by(**kwargs).one()
-        return data
+        data = self._session.query(User).filter_by(**kwargs).first()
+        if data:
+            return data
+        raise NoResultFound
 
     def update_user(self, user_id: int, **kwargs: dict) -> None:
         """
