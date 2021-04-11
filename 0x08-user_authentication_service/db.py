@@ -54,10 +54,8 @@ class DB:
             if not hasattr(User, key):
                 raise InvalidRequestError
 
-        data = self._session.query(User).filter_by(**kwargs).first()
-        if data:
-            return data
-        raise NoResultFound
+        data = self._session.query(User).filter_by(**kwargs).one()
+        return data
 
     def update_user(self, user_id: int, **kwargs: dict) -> None:
         """
@@ -71,12 +69,11 @@ class DB:
         if type(user_id) is int and type(kwargs) is dict:
             try:
                 user = self.find_user_by(id=user_id)
-                if user:
-                    for key, value in kwargs.items():
-                        if hasattr(User, key):
-                            setattr(user, key, value)
-                            self._session.commit()
-                        else:
-                            raise ValueError
+                for key, value in kwargs.items():
+                    if hasattr(User, key):
+                        setattr(user, key, value)
+                        self._session.commit()
+                    else:
+                        raise ValueError
             except NoResultFound:
                 pass
