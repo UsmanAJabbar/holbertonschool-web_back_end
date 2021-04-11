@@ -31,7 +31,6 @@ class DB:
             Adds a user to the database
         """
         if type(email) is str and type(hashed_password) in [str, bytes]:
-            from user import User
             user = User(email=email, hashed_password=hashed_password)
             self._session.add(user)
             self._session.commit()
@@ -50,7 +49,7 @@ class DB:
         if not kwargs:
             raise InvalidRequestError
 
-        for key in kwargs:
+        for key in kwargs.keys():
             if not hasattr(User, key):
                 raise InvalidRequestError
 
