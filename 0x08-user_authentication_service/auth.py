@@ -39,7 +39,6 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-
     def register_user(self, email: str, password: str) -> User:
         """
         ---------------------
@@ -57,7 +56,6 @@ class Auth:
             except NoResultFound:
                 user = self._db.add_user(email, _hash_password(password))
                 return user
-
 
     def valid_login(self, email: str, password: str) -> bool:
         """
@@ -140,7 +138,6 @@ class Auth:
                 return reset_token
             except NoResultFound:
                 raise ValueError
-
 
     def update_password(self, reset_token: str, password: str) -> None:
         """
