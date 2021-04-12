@@ -52,7 +52,7 @@ class Auth:
         """
         if type(email) is str and type(password) is str:
             try:
-                self._db.find_user_by(email=email):
+                self._db.find_user_by(email=email)
                 raise ValueError(f'User {email} already exists')
             except NoResultFound:
                 user = self._db.add_user(email, _hash_password(password))
