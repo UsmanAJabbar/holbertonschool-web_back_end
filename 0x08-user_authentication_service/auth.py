@@ -2,9 +2,9 @@
 """Hash Password File"""
 from db import DB
 from user import User
-from sqlalchemy.exc import NoResultFound
 import bcrypt
 import uuid
+from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> str:
@@ -39,6 +39,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
+
     def register_user(self, email: str, password: str) -> User:
         """
         ---------------------
@@ -51,7 +52,7 @@ class Auth:
         """
         if type(email) is str and type(password) is str:
             try:
-                self._db.find_user_by(email=email)
+                self._db.find_user_by(email=email):
                 raise ValueError(f'User {email} already exists')
             except NoResultFound:
                 user = self._db.add_user(email, _hash_password(password))
@@ -72,7 +73,7 @@ class Auth:
                 user = self._db.find_user_by(email=email)
                 return bcrypt.checkpw(password.encode(), user.hashed_password)
             except NoResultFound:
-                return False
+                pass
         return False
 
     def create_session(self, email: str) -> str:
@@ -134,11 +135,11 @@ class Auth:
         if type(email) is str:
             try:
                 user = self._db.find_user_by(email=email)
-                reset_token = _generate_uuid()
-                self._db.update_user(user.id, reset_token=reset_token)
+                self._db.update_user(user.id, reset_token=_generate_uuid())
                 return reset_token
             except NoResultFound:
                 raise ValueError
+
 
     def update_password(self, reset_token: str, password: str) -> None:
         """
