@@ -54,10 +54,7 @@ class DB:
             if not hasattr(User, key):
                 raise InvalidRequestError
 
-        data = self._session.query(User).filter_by(**kwargs).first()
-        if data:
-            return data
-        raise NoResultFound
+        return self._session.query(User).filter_by(**kwargs).one()
 
     def update_user(self, user_id: int, **kwargs: dict) -> None:
         """
