@@ -7,7 +7,7 @@ import bcrypt
 import uuid
 
 
-def _hash_password(password: str) -> bytes:
+def _hash_password(password: str) -> str:
     """
     ----------------------
     METHOD: _hash_password
