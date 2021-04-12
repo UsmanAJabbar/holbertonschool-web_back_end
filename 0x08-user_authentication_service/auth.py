@@ -15,10 +15,11 @@ def _hash_password(password: str) -> str:
         plain text password passed in the
         variable @password
     """
-    import bcrypt
+    if type(password) is str:
+        import bcrypt
 
-    pwd, salt = password.encode(), bcrypt.gensalt()
-    return bcrypt.hashpw(pwd, salt)
+        pwd, salt = password.encode(), bcrypt.gensalt()
+        return bcrypt.hashpw(pwd, salt)
 
 
 def _generate_uuid() -> str:
