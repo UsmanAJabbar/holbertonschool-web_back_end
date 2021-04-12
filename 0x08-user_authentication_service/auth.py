@@ -17,7 +17,7 @@ def _hash_password(password: str) -> bytes:
         plain text password passed in the
         variable @password
     """
-    if type(password) is str:
+    if password and type(password) is str:
         pwd, salt = password.encode(), bcrypt.gensalt()
         return bcrypt.hashpw(pwd, salt)
 
