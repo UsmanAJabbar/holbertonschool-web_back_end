@@ -19,7 +19,7 @@ def _hash_password(password: str) -> str:
     """
     if password and type(password) is str:
         pwd, salt = password.encode(), bcrypt.gensalt()
-        return str(bcrypt.hashpw(pwd, salt))
+        return bcrypt.hashpw(pwd, salt)
 
 
 def _generate_uuid() -> str:
