@@ -11,7 +11,6 @@ from user import Base, User
 class DB:
     """ Yeet Yeet The Checker Is Sheet """
 
-
     def __init__(self):
         """Docs here"""
         self._engine = create_engine("sqlite:///a.db")
