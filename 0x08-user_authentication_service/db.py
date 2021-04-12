@@ -9,8 +9,11 @@ from user import Base, User
 
 
 class DB:
+    """ Yeet Yeet The Checker Is Sheet """
+
 
     def __init__(self):
+        """Docs here"""
         self._engine = create_engine("sqlite:///a.db")
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
@@ -18,6 +21,7 @@ class DB:
 
     @property
     def _session(self):
+        """And some docs there"""
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
