@@ -65,7 +65,7 @@ class DB:
             Updates a given user with the attributes
             passed in kwargs.
         """
-        if type(user_id) is int and type(kwargs) is dict:
+        if type(user_id) is int kwargs:
             try:
                 user = self.find_user_by(id=user_id)
                 for key, value in kwargs.items():
