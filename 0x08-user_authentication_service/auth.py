@@ -5,7 +5,7 @@ from user import User
 from sqlalchemy.exc import NoResultFound
 
 
-def _hash_password(password: str) -> str:
+def _hash_password(password: str) -> bytes:
     """
     ----------------------
     METHOD: _hash_password
