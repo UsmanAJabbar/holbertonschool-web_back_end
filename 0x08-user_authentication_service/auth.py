@@ -3,6 +3,8 @@
 from db import DB
 from user import User
 from sqlalchemy.exc import NoResultFound
+import bcrypt
+import uuid
 
 
 def _hash_password(password: str) -> bytes:
@@ -16,11 +18,8 @@ def _hash_password(password: str) -> bytes:
         variable @password
     """
     if type(password) is str:
-        import bcrypt
-
         pwd, salt = password.encode(), bcrypt.gensalt()
         return bcrypt.hashpw(pwd, salt)
-    return None
 
 
 def _generate_uuid() -> str:
@@ -31,8 +30,7 @@ def _generate_uuid() -> str:
     Description:
         Generates and returns a UUID
     """
-    from uuid import uuid4
-    return str(uuid4())
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -52,13 +50,13 @@ class Auth:
             upon successful creation.
         """
         if type(email) is str and type(password) is str:
-
             try:
                 self._db.find_user_by(email=email)
                 raise ValueError(f'User {email} already exists')
             except NoResultFound:
                 user = self._db.add_user(email, _hash_password(password))
                 return user
+
 
     def valid_login(self, email: str, password: str) -> bool:
         """
@@ -69,8 +67,6 @@ class Auth:
             Returns whether a given password is valid
             for a given user.
         """
-        import bcrypt
-
         if type(email) is str and type(password) is str:
             try:
                 user = self._db.find_user_by(email=email)
