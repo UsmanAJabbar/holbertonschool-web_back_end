@@ -20,6 +20,7 @@ def _hash_password(password: str) -> bytes:
 
         pwd, salt = password.encode(), bcrypt.gensalt()
         return bcrypt.hashpw(pwd, salt)
+    return None
 
 
 def _generate_uuid() -> str:
