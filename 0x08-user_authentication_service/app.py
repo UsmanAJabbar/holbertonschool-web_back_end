@@ -31,7 +31,7 @@ def users():
         exist.
     """
     post = dict(request.form)
-    if post and 'email' in post and 'password' in post:
+    if post.keys() >= {'email', 'password'}:
         try:
             user = AUTH.register_user(post['email'], post['password'])
             return jsonify({"email": post['email'],
@@ -51,17 +51,15 @@ def login():
         request to the API and returns whether the
         login with the given details was successful.
     """
+
     post_data = dict(request.form)
-
-    if post_data and 'email' in post_data and 'password' in post_data:
+    if post_data.keys() >= {'email', 'password'}:
         if AUTH.valid_login(post_data['email'], post_data['password']):
-
             session_id = AUTH.create_session(post_data['email'])
             login = jsonify({"email": post_data['email'],
                              "message": "logged in"})
             login.set_cookie('session_id', session_id)
             return login, 200
-
     abort(401)
 
 
@@ -114,7 +112,6 @@ def reset_password():
         and returns the reset token.
     """
     post_data = dict(request.form)
-
     if 'email' in post_data:
         try:
             user = AUTH._db.find_user_by(email=post_data['email'])
@@ -138,15 +135,12 @@ def update_password():
         API.
     """
     pdata = dict(request.form)
-
-    if 'email' in pdata and 'reset_token' in pdata and 'new_password' in pdata:
+    if pdata.keys() >= {'email', 'reset_token', 'new_password'}:
         try:
-            user = AUTH._db.find_user_by(reset_token=pdata['reset_token'])
-            if user.reset_token == pdata['reset_token']:
-                AUTH.update_password(user.reset_token, pdata['new_password'])
-                return jsonify({"email": user.email,
-                                "message": "Password updated"}), 200
-        except NoResultFound:
+            AUTH.update_password(pdata['reset_token'], pdata['new_password'])
+            return jsonify({"email": pdata['email'],
+                            "message": "Password updated"}), 200
+        except ValueError:
             pass
     abort(403)
 
