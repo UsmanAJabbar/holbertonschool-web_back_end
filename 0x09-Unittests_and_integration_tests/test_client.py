@@ -14,9 +14,12 @@ class TestGitHubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, gh_user, mocked_method):
-        mocked_method.return_value = [gh_user]
+        mocked_method.return_value = {gh_user:True}
         gh = GitHubOrgClient(gh_user)
-        self.assertIn(gh_user, gh.org)
+
+        test_url = gh.ORG_URL.format(org=gh._org_name)
+
+        self.assertTrue(gh.org)
         mocked_method.assert_called_once_with(f'https://api.github.com/orgs/{gh_user}')
 
 
