@@ -2,7 +2,7 @@
 """Unit testing file"""
 import unittest
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 from unittest.mock import patch, Mock
 
 
@@ -83,6 +83,46 @@ class TestGetJson(unittest.TestCase):
         live_json = get_json(url)
 
         self.assertEqual(live_json, expected_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """
+    ------------------
+    CLASS: TestMemoize
+    ------------------
+    """
+
+    def test_memoize(self):
+        """
+        --------------------
+        METHOD: test_memoize
+        --------------------
+        Description:
+            Tests whether the memoization is actually
+            working by ensuring the method isn't called
+            twice.
+        """
+
+        class TestClass:
+            """
+            ----------------
+            CLASS: TestClass
+            ----------------
+            """
+
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                self.a_method()
+
+
+        with patch.object(TestClass, 'a_method') as mocked_a_method:
+            test = TestClass()
+            test.a_property()
+            test.a_property()
+            mocked_a_method.assert_called_once()
 
 
 if __name__ == '__main__':
