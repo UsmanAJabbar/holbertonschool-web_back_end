@@ -52,7 +52,7 @@ class TestGithubOrgClient(unittest.TestCase):
         METHOD: test_public_repos
         -------------------------
         Description:
-
+            Tests public repos
         """
         mocked_get_json.return_value = {'get_json':
                                         'some data the API returned'}
@@ -68,6 +68,23 @@ class TestGithubOrgClient(unittest.TestCase):
             mocked_public_repo_urls.assert_called_once()
             mocked_get_json()
             mocked_get_json.assert_called_once()
+    
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license"),
+        ({"license": {"key": "other_license"}}, "my_license")
+    ])
+    def test_has_license(self, license, exp_license_key):
+        """
+        ------------------------
+        METHOD: test_has_license
+        ------------------------
+        Description:
+            Checks whether a license_key is present
+            in a license object.
+        """
+        self.assertEqual(GithubOrgClient.has_license(license, exp_license_key),
+                         license['license']['key'] == exp_license_key)
+
 
 if __name__ == '__main__':
     unittest.main()
