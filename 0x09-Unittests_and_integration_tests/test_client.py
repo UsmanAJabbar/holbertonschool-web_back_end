@@ -23,10 +23,8 @@ class TestGitHubOrgClient(unittest.TestCase):
         mocked_method.return_value = {gh_user:True}
         gh = GitHubOrgClient(gh_user)
 
-        test_url = gh.ORG_URL.format(org=gh._org_name)
-
         self.assertEqual(gh.org, {gh_user:True})
-        mocked_method.assert_called_once_with(test_url)
+        mocked_method.assert_called_once()
 
 
 if __name__ == '__main__':
