@@ -7,6 +7,11 @@ import unittest
 
 
 class TestGitHubOrgClient(unittest.TestCase):
+    """
+    ------------------
+    CLASS:
+    -----------------
+    """
 
     @parameterized.expand([
         ('google'),
@@ -14,13 +19,14 @@ class TestGitHubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, gh_user, mocked_method):
+        """"METHOD FOR SOME REASON """
         mocked_method.return_value = {gh_user:True}
         gh = GitHubOrgClient(gh_user)
 
         test_url = gh.ORG_URL.format(org=gh._org_name)
 
         self.assertTrue(gh.org)
-        mocked_method.assert_called_once_with(f'https://api.github.com/orgs/{gh_user}')
+        mocked_method.assert_called_once_with(test_url)
 
 
 if __name__ == '__main__':
