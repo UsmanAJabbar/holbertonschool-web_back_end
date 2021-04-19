@@ -2,7 +2,8 @@
 """Unit testing file"""
 import unittest
 from parameterized import parameterized
-from .utils import access_nested_map, get_json
+from utils import access_nested_map, get_json
+from unittest.mock import patch, Mock
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -63,7 +64,8 @@ class TestGetJson(unittest.TestCase):
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
     ])
-    def test_get_json(self, url, expected):
+    @patch('utils.requests.get')
+    def test_get_json(self, url, expected_payload, mock_get):
         """
         ---------------------
         METHOD: test_get_json
@@ -73,7 +75,15 @@ class TestGetJson(unittest.TestCase):
             whether it returns the expected output
             for their payloads.
         """
-        
+        # Create a mock object that mimics the original dir of .get func
+        mock_get.return_value = Mock(ok=True)
+        mock_get.return_value.json.return_value = expected_payload
+
+        # Now get a response from the actual server
+        live_json = get_json(url)
+
+        self.assertEqual(live_json, expected_payload)
+
 
 if __name__ == '__main__':
     unittest.main()
