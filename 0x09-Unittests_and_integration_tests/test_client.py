@@ -32,7 +32,9 @@ class TestGithubOrgClient(unittest.TestCase):
         -----------------------------
         METHOD: test_public_repos_url
         -----------------------------
-        Tests whether the
+        Tests whether the _public_repos_url is
+        correctly set and that the memoization
+        is also working accordingly.
         """
         expected_payload = {'gh_url': 'example.com'}
         mocked_method.return_value = expected_payload
@@ -42,7 +44,30 @@ class TestGithubOrgClient(unittest.TestCase):
 
         self.assertEqual(url, expected_payload)
         mocked_method.assert_called_once()
+    
+    @patch('client.get_json')
+    def test_public_repos(self, mocked_get_json):
+        """
+        -------------------------
+        METHOD: test_public_repos
+        -------------------------
+        Description:
 
+        """
+        mocked_get_json.return_value = {'get_json':
+                                        'some data the API returned'}
+        with patch('client.GithubOrgClient._public_repos_url',
+                   new_callable=PropertyMock) as mocked_public_repo_urls:
+            expected_payload = [{'gh_url': 'example.com'}]
+            mocked_public_repo_urls.return_value = expected_payload
+
+            gh = GithubOrgClient('google')
+            url = gh._public_repos_url
+
+            self.assertEqual(url, expected_payload)
+            mocked_public_repo_urls.assert_called_once()
+            mocked_get_json()
+            mocked_get_json.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main()
