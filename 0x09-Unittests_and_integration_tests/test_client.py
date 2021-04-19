@@ -17,6 +17,8 @@ class TestGitHubOrgClient(unittest.TestCase):
         mocked_method.return_value = [gh_user]
         gh = GitHubOrgClient(gh_user)
         self.assertIn(gh_user, gh.org)
+        mocked_method.assert_called_once_with(f'https://api.github.com/orgs/{gh_user}')
+
 
 if __name__ == '__main__':
     unittest.main()
