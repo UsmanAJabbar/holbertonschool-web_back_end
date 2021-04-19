@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """Test Client File"""
-from client import GitHubOrgClient
+from client import GithubOrgClient
 from parameterized import parameterized
 from unittest.mock import patch, Mock
 import unittest
 
 
-class TestGitHubOrgClient(unittest.TestCase):
+class TestGithubOrgClient(unittest.TestCase):
     """
-    ------------------
-    CLASS:
-    -----------------
+    --------------------------
+    CLASS: TestGitHubOrgClient
+    --------------------------
     """
 
     @parameterized.expand([
@@ -18,12 +18,12 @@ class TestGitHubOrgClient(unittest.TestCase):
         ('abc')
     ])
     @patch('client.get_json')
-    def test_org(self, gh_user, mocked_method):
-        """"METHOD FOR SOME REASON """
-        mocked_method.return_value = {gh_user:True}
-        gh = GitHubOrgClient(gh_user)
+    def test_org(self, org_name, mocked_method):
+        """ Tests whether get_json is behaving expectedly """
+        mocked_method.return_value = {org_name:True}
+        gh = GithubOrgClient(org_name)
 
-        self.assertEqual(gh.org, {gh_user:True})
+        self.assertEqual(gh.org, {org_name:True})
         mocked_method.assert_called_once()
 
 
