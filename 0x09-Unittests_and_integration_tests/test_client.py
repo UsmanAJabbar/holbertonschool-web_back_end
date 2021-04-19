@@ -25,7 +25,7 @@ class TestGitHubOrgClient(unittest.TestCase):
 
         test_url = gh.ORG_URL.format(org=gh._org_name)
 
-        self.assertTrue(gh.org)
+        self.assertEqual(gh.org, {gh_user:True})
         mocked_method.assert_called_once_with(test_url)
 
 
