@@ -120,8 +120,8 @@ class TestMemoize(unittest.TestCase):
 
         with patch.object(TestClass, 'a_method') as mocked_a_method:
             test = TestClass()
-            test.a_property()
-            test.a_property()
+            test.a_property
+            test.a_property
             mocked_a_method.assert_called_once()
 
 
