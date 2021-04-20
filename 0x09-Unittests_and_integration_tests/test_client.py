@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Test Client File"""
 from client import GithubOrgClient
-from parameterized import parameterized
+from fixtures import TEST_PAYLOAD
+from parameterized import parameterized, parameterized_class
 from unittest.mock import patch, Mock, PropertyMock
 import unittest
 
@@ -11,6 +12,10 @@ class TestGithubOrgClient(unittest.TestCase):
     --------------------------
     CLASS: TestGitHubOrgClient
     --------------------------
+    Description:
+        A collection of unit tests testing
+        the individual functions in the
+        clients module(file)
     """
 
     @parameterized.expand([
@@ -20,13 +25,14 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.get_json')
     def test_org(self, org_name, mocked_method):
         """ Tests whether get_json is behaving expectedly """
-        mocked_method.return_value = {org_name:True}
+        mocked_method.return_value = {org_name: True}
         gh = GithubOrgClient(org_name)
 
-        self.assertEqual(gh.org, {org_name:True})
+        self.assertEqual(gh.org, {org_name: True})
         mocked_method.assert_called_once()
 
-    @patch('client.GithubOrgClient._public_repos_url', new_callable=PropertyMock)
+    @patch('client.GithubOrgClient._public_repos_url',
+           new_callable=PropertyMock)
     def test_public_repos_url(self, mocked_method):
         """
         -----------------------------
@@ -44,7 +50,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
         self.assertEqual(url, expected_payload)
         mocked_method.assert_called_once()
-    
+
     @patch('client.get_json')
     def test_public_repos(self, mocked_get_json):
         """
@@ -68,7 +74,7 @@ class TestGithubOrgClient(unittest.TestCase):
             mocked_public_repo_urls.assert_called_once()
             mocked_get_json()
             mocked_get_json.assert_called_once()
-    
+
     @parameterized.expand([
         ({"license": {"key": "my_license"}}, "my_license"),
         ({"license": {"key": "other_license"}}, "my_license")
@@ -85,6 +91,36 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(GithubOrgClient.has_license(license, exp_license_key),
                          license['license']['key'] == exp_license_key)
 
+
+# @parameterized_class([
+#     ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+#     TEST_PAYLOAD
+# ])
+# class TestIntegrationGithubOrgClient(unittest.TestCase):
+#     """
+#     --------------------------------------
+#     METHOD: TestIntegrationGithubOrgClient
+#     --------------------------------------
+#     """
+#     @classmethod
+#     def setUpClass(cls):
+#         """
+#         ------------------
+#         METHOD: setupClass
+#         ------------------
+#         Sets up the class for upcoming tests
+#         """
+#         get_patcher = patch('utils.requests.get')
+#         get_patcher.start()
+
+#     @classmethod
+#     def tearDownClass(self):
+#         """
+#         ----------------------
+#         METHOD: tearddownClass
+#         ----------------------
+#         """
+#         get_patcher.stop()
 
 if __name__ == '__main__':
     unittest.main()

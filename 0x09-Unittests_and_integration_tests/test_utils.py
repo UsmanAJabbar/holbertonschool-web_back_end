@@ -117,7 +117,6 @@ class TestMemoize(unittest.TestCase):
             def a_property(self):
                 self.a_method()
 
-
         with patch.object(TestClass, 'a_method') as mocked_a_method:
             test = TestClass()
             test.a_property
