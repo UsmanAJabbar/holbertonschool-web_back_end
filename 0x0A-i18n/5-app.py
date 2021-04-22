@@ -9,6 +9,7 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user(user_id: int) -> dict:
     """
     ----------------
@@ -24,6 +25,7 @@ def get_user(user_id: int) -> dict:
     if user_id and type(user_id) in [int, str]:
         return users.get(int(user_id))
 
+
 class Config(object):
     """
     -------------
@@ -38,9 +40,11 @@ class Config(object):
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
+
 app = Flask(__name__)
 app.config.from_object(Config)
 babel = Babel(app)
+
 
 @app.before_request
 def before_request():
@@ -56,12 +60,15 @@ def before_request():
     user_id = request.args.get('login_as')
     g.user = get_user(user_id)
 
+
 @babel.localeselector
 def get_locale():
     """ Sets up the correct locale """
-    if g.user and g.user.get('locale') == 'fr' or request.args.get('locale') == 'fr':
+    if g.user and g.user.get('locale') == 'fr' or\
+            request.args.get('locale') == 'fr':
         return 'fr'
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 
 @app.route('/', methods=['GET'], strict_slashes=False)
 def root():
@@ -82,6 +89,7 @@ def root():
                            title=get_translation('home_title'),
                            heading=get_translation('home_header'),
                            login_msg=login_msg)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
