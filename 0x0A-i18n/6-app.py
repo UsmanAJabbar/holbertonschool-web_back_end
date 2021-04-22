@@ -65,10 +65,10 @@ def before_request():
 def get_locale():
     """ Sets up the correct locale """
     if request.args.get('locale') == 'fr' or\
-        g.user and g.user.get('locale') == 'fr' or\
-        request.headers.get('Accept-Language') and\
-        request.headers.get('Accept-Language').split()[0][:2] == 'fr' or\
-        Config.BABEL_DEFAULT_LOCALE == 'fr':
+            g.user and g.user.get('locale') == 'fr' or\
+            request.headers.get('Accept-Language') and\
+            request.headers.get('Accept-Language').split()[0][:2] == 'fr' or\
+            Config.BABEL_DEFAULT_LOCALE == 'fr':
         return 'fr'
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
