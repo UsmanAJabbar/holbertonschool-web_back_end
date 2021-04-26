@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Redis Cache File """
 import redis
-from typing import Union
+from typing import Union, Callable, Optional, Any
 
 
 class Cache:
@@ -19,4 +19,9 @@ class Cache:
             key = str(uuid4())
             value = data
             self._redis.set(key, data)
-            return key
+            return key or ''
+
+    def get(self, key: str, fn: Optional[Callable] = None) -> Any:
+        """ Given a key, fetches data from the redis client """
+        data = self._redis.get(key)
+        return data if not fn else fn(data)
