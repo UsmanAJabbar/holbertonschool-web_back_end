@@ -2,6 +2,7 @@
 """ Redis Cache File """
 import redis
 from typing import Union, Callable, Optional, Any
+from functools import wraps
 
 
 def count_calls(fn: Callable) -> Callable:
@@ -12,16 +13,18 @@ def count_calls(fn: Callable) -> Callable:
     Description:
         Decorator that counts the number of
         times a method was called.
+    Args:
+        @fn: method to count
     """
     key = fn.__qualname__
-    print(key)
-    def key_setter(self, *args, **kwargs):
-        print(key, arg, kwargs)
-        if hasattr(fn, key):
-            setattr(fn, key, getattr(fn, key) + 1)
-        else:
-            setattr(fn, key, 0)
-    return key_setter
+
+    @wraps(fn)
+    def call_counter(self, *args, **kwargs):
+        self._redis.incr(key)
+        return fn(self, *args, **kwargs)
+
+    return call_counter
+
 
 class Cache:
     """ Redis Caching class """
