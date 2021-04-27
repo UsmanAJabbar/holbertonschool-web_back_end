@@ -22,9 +22,9 @@ def get_page() -> None:
 
     return req.text
 
-get_page()
-get_page()
-get_page()
-get_page()
-print(redis_db.get(f"count:http://slowwly.robertomurray.co.uk"))
-print(redis_db.get(f"count:https://usmanjabbar.com"))
+# get_page()
+# get_page()
+# get_page()
+# get_page()
+# print(redis_db.get(f"count:http://slowwly.robertomurray.co.uk"))
+# print(redis_db.get(f"count:https://usmanjabbar.com"))
