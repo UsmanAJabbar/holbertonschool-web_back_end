@@ -5,7 +5,7 @@ from functools import wraps
 from typing import Callable
 import redis
 redis_db = redis.Redis()
-redis_db.flushdb()
+# redis_db.flushdb()
 
 
 def cache(method: Callable):
