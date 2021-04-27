@@ -34,7 +34,7 @@ def count_calls(fn: Callable) -> Callable:
     key = fn.__qualname__
 
     @wraps(fn)
-    def call_counter(self, *args, **kwargs):
+    def call_counter(self, *args, **kwargs) -> Callable:
         self._redis.incr(key)
         return fn(self, *args, **kwargs)
 
