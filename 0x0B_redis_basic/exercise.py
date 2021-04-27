@@ -22,16 +22,7 @@ def replay(obj: Union[Callable, str]) -> None:
 
 
 def count_calls(fn: Callable) -> Callable:
-    """
-    -----------------------
-    METHOD: count_decorator
-    -----------------------
-    Description:
-        Decorator that counts the number of
-        times a method was called.
-    Args:
-        @fn: method to count
-    """
+    """ Count calls decorator method """
     key = fn.__qualname__
 
     @wraps(fn)
