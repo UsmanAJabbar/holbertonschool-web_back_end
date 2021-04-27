@@ -52,7 +52,7 @@ def call_history(fn: Callable) -> Callable:
     key = fn.__qualname__
 
     @wraps(fn)
-    def history_dec(self, *args, **kwargs):
+    def history_dec(self, *args, **kwargs) -> str:
         self._redis.rpush(f'{key}:inputs', str(args))
         data = fn(self, *args, *kwargs)
         self._redis.rpush(f'{key}:outputs', data)
@@ -84,3 +84,11 @@ class Cache:
         """ Given a key, fetches data from the redis client """
         data = self._redis.get(key)
         return data if not callable(fn) else fn(data)
+
+    def get_int(self, key: str) -> int:
+        """ Given a key, returns the key as an int value """
+        return int(self._redis.get(key))
+    
+    def get_str(self, key: str) -> str:
+        """ Given a key, returns the key as a string value """
+        return str(self._redis.get(key), 'UTF-8')
