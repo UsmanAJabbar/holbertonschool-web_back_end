@@ -5,6 +5,21 @@ from typing import Union, Callable, Optional, Any
 from functools import wraps
 
 
+def replay(obj: Union[Callable, str]) -> None:
+    """ Returns a printed history of inputs and outputs """
+    cache = obj.__self__
+
+    call_count = str(cache.get(cache.store.__qualname__), 'UTF-8')
+    inputs = cache._redis.lrange(f"{cache.store.__qualname__}:inputs", 0, -1)
+    outputs = cache._redis.lrange(f"{cache.store.__qualname__}:outputs", 0, -1)
+
+    print(f'{obj.__qualname__} was called {call_count} times:')
+
+    for input, output in zip(inputs, outputs):
+        input, output = str(input, 'UTF-8'), str(output, 'UTF-8')
+        print(f'{obj.__qualname__}(*{input}) -> {output}')
+
+
 def count_calls(fn: Callable) -> Callable:
     """
     -----------------------
@@ -65,7 +80,6 @@ class Cache:
             self._redis.set(key, data)
             return key or ''
 
-    @call_history
     def get(self, key: str, fn: Optional[Callable] = None) -> Any:
         """ Given a key, fetches data from the redis client """
         data = self._redis.get(key)
