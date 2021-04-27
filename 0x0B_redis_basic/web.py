@@ -3,8 +3,8 @@
 from requests import get as r_get
 from typing import Callable
 import redis
-cache = redis.Redis()
-cache.flushdb()
+redis_db = redis.Redis()
+redis_db.flushdb()
 
 
 def get_page(url: str = 'http://slowwly.robertomurray.co.uk',
@@ -13,10 +13,10 @@ def get_page(url: str = 'http://slowwly.robertomurray.co.uk',
     if type(url) is str and type(exp) is int:
         req = r_get(url)
 
-        if not cache.get(f"count:{url}"):
-            cache.set(f"count:{url}", 1, exp)
+        if not redis_db.get(f"count:{url}"):
+            redis_db.set(f"count:{url}", 1, exp)
         else:
-            cache.incr(f"count:{url}")
+            redis_db.incr(f"count:{url}")
 
         return req.text
 
@@ -24,5 +24,5 @@ def get_page(url: str = 'http://slowwly.robertomurray.co.uk',
 # get_page('http://slowwly.robertomurray.co.uk')
 # get_page('https://usmanjabbar.com')
 # get_page()
-# print(cache.get(f"count:http://slowwly.robertomurray.co.uk"))
-# print(cache.get(f"count:https://usmanjabbar.com"))
+# print(redis_db.get(f"count:http://slowwly.robertomurray.co.uk"))
+# print(redis_db.get(f"count:https://usmanjabbar.com"))
