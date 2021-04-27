@@ -10,17 +10,19 @@ cache.flushdb()
 def get_page(url: str = 'http://slowwly.robertomurray.co.uk',
              exp: int = 10) -> None:
     """ Runs a GET request on a given URL """
-    req = r_get(url)
+    if type(url) is str and type(exp) is int:
+        req = r_get(url)
 
-    if not cache.get(f"count:{url}"):
-        cache.set(f"count:{url}", 1, 10)
-    else:
-        cache.incr(f"count:{url}")
+        if not cache.get(f"count:{url}"):
+            cache.set(f"count:{url}", 1, exp)
+        else:
+            cache.incr(f"count:{url}")
 
-    return req.text
+        return req.text
 
-# get_page()
-# get_page()
-# get_page()
+# get_page('http://slowwly.robertomurray.co.uk')
+# get_page('http://slowwly.robertomurray.co.uk')
+# get_page('https://usmanjabbar.com')
 # get_page()
 # print(cache.get(f"count:http://slowwly.robertomurray.co.uk"))
+# print(cache.get(f"count:https://usmanjabbar.com"))
