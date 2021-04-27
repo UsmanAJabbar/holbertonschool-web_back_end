@@ -28,12 +28,12 @@ def count_calls(method: Callable) -> Callable:
     @wraps(method)
     def call_counter(self, *args) -> bytes:
         self._redis.incr(key)
-        return fn(self, *args)
+        return method(self, *args)
 
     return call_counter
 
 
-def call_history(fn: Callable) -> Callable:
+def call_history(method: Callable) -> Callable:
     """
     --------------------
     METHOD: call_history
@@ -41,12 +41,12 @@ def call_history(fn: Callable) -> Callable:
     Description:
         Keeps a history the inputs and outputs
     """
-    key = fn.__qualname__
+    key = method.__qualname__
 
-    @wraps(fn)
+    @wraps(method)
     def history_dec(self, *args) -> bytes:
         self._redis.rpush(f'{key}:inputs', str(args))
-        data = fn(self, *args)
+        data = method(self, *args)
         self._redis.rpush(f'{key}:outputs', data)
         return data
 
