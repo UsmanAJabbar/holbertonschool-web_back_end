@@ -2,8 +2,8 @@
 """ Adv task webs module """
 from requests import get as r_get
 from typing import Callable
-from redis import Redis
-cache = Redis()
+import redis
+cache = redis.Redis()
 cache.flushdb()
 
 
