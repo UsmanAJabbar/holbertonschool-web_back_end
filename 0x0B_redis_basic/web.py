@@ -15,9 +15,9 @@ def get_page(url: str) -> str:
         if not redis_db.get(f"count:{url}"):
             redis_db.set(f"count:{url}", 1, 10)
         else:
-            redis_db.setex(f'count:{url}',                          # name
-                           10,                                      # time
-                           int(redis_db.get(f'count:{url}')) + 1)   # value
+            redis_db.set(f'count:{url}',                          # name
+                         int(redis_db.get(f'count:{url}')) + 1,   # value
+                         10)                                      # expiry
 
         return req.text
 
