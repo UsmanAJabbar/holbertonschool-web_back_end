@@ -3,6 +3,7 @@
 import redis
 from typing import Union, Callable, Optional, Any
 from functools import wraps
+from uuid import uuid4
 
 
 def replay(obj: Union[Callable, str]) -> None:
@@ -74,7 +75,6 @@ class Cache:
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Adds data to the redis database """
         if data:
-            from uuid import uuid4
             key = str(uuid4())
             value = data
             self._redis.set(key, data)
