@@ -7,7 +7,6 @@ redis_db = redis.Redis()
 redis_db.flushdb()
 
 
-
 def get_page(url: str) -> str:
     """ Runs a GET request on a given URL """
     if type(url) is str:
@@ -16,7 +15,9 @@ def get_page(url: str) -> str:
         if not redis_db.get(f"count:{url}"):
             redis_db.set(f"count:{url}", 1, 10)
         else:
-            redis_db.setex(f'count:{url}', 10, int(redis_db.get(f'count:{url}')) + 1)
+            redis_db.setex(f'count:{url}',                          # name
+                           10,                                      # time
+                           int(redis_db.get(f'count:{url}')) + 1)   # value
 
         return req.text
 
