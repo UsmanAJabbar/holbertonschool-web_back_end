@@ -54,7 +54,7 @@ def call_history(fn: Callable) -> Callable:
     @wraps(fn)
     def history_dec(self, *args, **kwargs) -> bytes:
         self._redis.rpush(f'{key}:inputs', str(args))
-        data = fn(self, *args, *kwargs)
+        data = fn(self, *args, **kwargs)
         self._redis.rpush(f'{key}:outputs', data)
         return data
 
