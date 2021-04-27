@@ -34,9 +34,9 @@ def count_calls(fn: Callable) -> Callable:
     key = fn.__qualname__
 
     @wraps(fn)
-    def call_counter(self, *args, **kwargs) -> bytes:
+    def call_counter(self, *args) -> bytes:
         self._redis.incr(key)
-        return fn(self, *args, **kwargs)
+        return fn(self, *args)
 
     return call_counter
 
@@ -52,9 +52,9 @@ def call_history(fn: Callable) -> Callable:
     key = fn.__qualname__
 
     @wraps(fn)
-    def history_dec(self, *args, **kwargs) -> bytes:
+    def history_dec(self, *args) -> bytes:
         self._redis.rpush(f'{key}:inputs', str(args))
-        data = fn(self, *args, **kwargs)
+        data = fn(self, *args)
         self._redis.rpush(f'{key}:outputs', data)
         return data
 
