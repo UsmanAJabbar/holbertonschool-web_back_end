@@ -7,7 +7,8 @@ cache = Redis()
 cache.flushdb()
 
 
-def get_page(url: str = 'http://slowwly.robertomurray.co.uk') -> None:
+def get_page(url: str = 'http://slowwly.robertomurray.co.uk',
+             exp: int = 10) -> None:
     """ Runs a GET request on a given URL """
     req = r_get(url)
 
@@ -15,6 +16,8 @@ def get_page(url: str = 'http://slowwly.robertomurray.co.uk') -> None:
         cache.set(f"count:{url}", 1, 10)
     else:
         cache.incr(f"count:{url}")
+
+    return req.text
 
 # get_page()
 # get_page()
