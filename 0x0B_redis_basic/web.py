@@ -20,8 +20,8 @@ def get_page(url: str) -> str:
 
         return req.text
 
-get_page('http://slowwly.robertomurray.co.uk')
-get_page('http://slowwly.robertomurray.co.uk')
-get_page('https://usmanjabbar.com')
-print(redis_db.get(f"count:http://slowwly.robertomurray.co.uk"))
-print(redis_db.get(f"count:https://usmanjabbar.com"))
+# get_page('http://slowwly.robertomurray.co.uk')
+# get_page('http://slowwly.robertomurray.co.uk')
+# get_page('https://usmanjabbar.com')
+# print(redis_db.get(f"count:http://slowwly.robertomurray.co.uk"))
+# print(redis_db.get(f"count:https://usmanjabbar.com"))
