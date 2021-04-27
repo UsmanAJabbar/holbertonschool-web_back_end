@@ -83,4 +83,4 @@ class Cache:
     def get(self, key: str, fn: Optional[Callable] = None) -> Any:
         """ Given a key, fetches data from the redis client """
         data = self._redis.get(key)
-        return data if not fn else fn(data)
+        return data if not callable(fn) else fn(data)
