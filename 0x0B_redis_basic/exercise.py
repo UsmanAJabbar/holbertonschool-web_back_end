@@ -21,11 +21,11 @@ def replay(obj: Union[Callable, str]) -> None:
         print(f'{obj.__qualname__}(*{input}) -> {output}')
 
 
-def count_calls(fn: Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """ Count calls decorator method """
-    key = fn.__qualname__
+    key = method.__qualname__
 
-    @wraps(fn)
+    @wraps(method)
     def call_counter(self, *args) -> bytes:
         self._redis.incr(key)
         return fn(self, *args)
