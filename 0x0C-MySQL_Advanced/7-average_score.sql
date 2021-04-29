@@ -4,7 +4,7 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser;
 CREATE PROCEDURE ComputeAverageScoreForUser (IN user_id INT)
 BEGIN
-    DECLARE avg_score INT;
+    DECLARE avg_score FLOAT;
     SET avg_score = (SELECT AVG(score)
                      FROM corrections
                      WHERE corrections.user_id = user_id);
