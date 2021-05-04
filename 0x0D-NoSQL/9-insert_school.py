@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Some random docstring"""
 
 
 def insert_school(mongo_collection, **kwargs):

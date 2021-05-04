@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Some random docstring"""
 
 
 def update_topics(mongo_collection, name, topics):

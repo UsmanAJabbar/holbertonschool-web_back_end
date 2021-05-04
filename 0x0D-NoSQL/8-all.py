@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from pprint import pprint
+"""Some random docstring"""
 
 
 def list_all(mongo_collection):
