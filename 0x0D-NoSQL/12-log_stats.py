@@ -11,5 +11,5 @@ if __name__ == "__main__":
     print('Methods:')
     method = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
     for req in method:
-        print(f'\tmethod {req}', logs.count_documents({'method': req}))
+        print(f'\tmethod {req}:', logs.count_documents({'method': req}))
     print(logs.count_documents({'method': 'GET','path': '/status'}), 'status check')
