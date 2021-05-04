@@ -1,1 +1,2 @@
+// Prints the documents
 db.school.find()

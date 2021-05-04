@@ -1,1 +1,2 @@
+// Switches to my_db as the db else creates it
 use my_db
