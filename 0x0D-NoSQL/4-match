@@ -1,0 +1,4 @@
+// Finds and returns a document
+db.school.find({
+	"name": "Holberton school"
+})

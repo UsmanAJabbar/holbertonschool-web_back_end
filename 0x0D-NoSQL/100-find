@@ -1,0 +1,6 @@
+// Regex searches in docs for a name key to point to ^Holberton
+db.school.find(
+	{name: 
+		{ $regex: "^Holberton" }
+	}
+)
