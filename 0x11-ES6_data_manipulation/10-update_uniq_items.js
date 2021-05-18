@@ -1,9 +1,10 @@
 // Updates items whose qty == 1 to 100
 export default function updateUniqueItems(someMap) {
-  if (someMap instanceof Map) {
+  try {
     return [...someMap.entries()]
       .filter((keyValArr) => keyValArr[1] === 1)
       .map((keyValArr) => someMap.set(keyValArr[0], 100));
+  } catch (e) {
+    throw Error('Cannot process');
   }
-  return Map();
 }
