@@ -32,9 +32,9 @@ const countStudents = (path) => new Promise((resolve, reject) => {
       }
 
       // Print necessary print statements
-      console.log(`Number of students: ${totalStudents}`);
-      console.log(output.slice(0, -1));
-      resolve('yeet');
+      output = (`Number of students: ${totalStudents}\n` + output).slice(0, -1);
+      console.log(output);
+      resolve(output);
     }
   });
 });
