@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const countStudents = (path) => new Promise((resolve, reject) => {
+const countStudents = (path, printFlag = 1) => new Promise((resolve, reject) => {
   // Pull data from CSV file
   try {
     fs.readFile(path, 'utf-8', (err, data) => {
@@ -34,7 +34,7 @@ const countStudents = (path) => new Promise((resolve, reject) => {
 
         // Print necessary print statements
         output = (`Number of students: ${totalStudents}\n${output}`).slice(0, -1);
-        console.log(output);
+        if (printFlag) console.log(output);
         resolve(output);
       }
     });

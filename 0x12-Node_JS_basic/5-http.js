@@ -9,7 +9,7 @@ const app = http.createServer((req, res) => {
 
   // Endpoints
   if (req.url === '/students') {
-    countStudents(pathToCSVFile)
+    countStudents(pathToCSVFile, 0)
       .then((success) => {
         const out = `This is the list of our students\n${success}`;
         res.end(out);
@@ -17,7 +17,7 @@ const app = http.createServer((req, res) => {
   } else {
     res.end('Hello Holberton School!');
   }
-})
+});
 
 app.listen(1245);
 
