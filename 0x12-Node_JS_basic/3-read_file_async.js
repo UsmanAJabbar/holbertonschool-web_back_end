@@ -8,7 +8,7 @@ const countStudents = (path, printFlag = 1) => new Promise((resolve, reject) => 
       else {
         const fileData = data
           .split('\n')
-          .filter((row) => row != '')
+          .filter((row) => row !== '')
           .map((student) => student.split(','))
           .slice(1)
           .reduce((total, currentVal) => {
