@@ -10,10 +10,15 @@ const app = http.createServer((req, res) => {
   // Endpoints
   if (req.url === '/students') {
     countStudents(pathToCSVFile)
-      .then((success) => res.end(success));
+      .then((success) => {
+        const out = `This is the list of our students\n${success}`;
+        res.end(out);
+      });
   } else {
     res.end('Hello Holberton School!');
   }
-}).listen(1245);
+})
+
+app.listen(1245);
 
 module.exports = app;
