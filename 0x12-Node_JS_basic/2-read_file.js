@@ -5,6 +5,7 @@ const countStudents = (path) => {
     // Pull data from CSV file
     const fileData = fs.readFileSync(path, 'utf8')
       .split('\n')
+      .filter((row) => row !== '')
       .map((student) => student.split(','))
       .slice(1)
       .reduce((total, currentVal) => {
