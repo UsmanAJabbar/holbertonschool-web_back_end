@@ -27,8 +27,10 @@ const countStudents = (path, printFlag = 1) => new Promise((resolve, reject) => 
         let output = '';
 
         for (const field in fileData) {
-          totalStudents += fileData[field].length;
-          output += `Number of students in ${field}: ${fileData[field].length}. List: ${fileData[field].join(', ')}\n`;
+          if (fileData.hasOwnProperty) {
+            totalStudents += fileData[field].length;
+            output += `Number of students in ${field}: ${fileData[field].length}. List: ${fileData[field].join(', ')}\n`;
+          }
         }
 
         // Print necessary print statements
