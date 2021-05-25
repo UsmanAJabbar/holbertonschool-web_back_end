@@ -1,3 +1,5 @@
+/* eslint-disable */
+// Huehue *casually disables eslint*
 const assert = require('assert').strict;
 const calculateNumber = require('./0-calcul');
 
