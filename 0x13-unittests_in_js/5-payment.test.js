@@ -8,7 +8,7 @@ describe('test sendPaymentRequestToApi flow', () => {
   let calculateNumberSpy;
   let consoleLogSpy;
 
-  before(() => {
+  beforeEach(() => {
     calculateNumberSpy = spy(Utils, 'calculateNumber');
     consoleLogSpy = spy(console, 'log');
   })
