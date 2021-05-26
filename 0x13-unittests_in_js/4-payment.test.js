@@ -1,13 +1,13 @@
 /* eslint-disable */
-const { spy, stub } = require('sinon');
+const sinon = require('sinon');
 const { expect } = require('chai');
 const sendPaymentRequestToApi = require('./3-payment');
 const Utils = require('./utils');
 
 describe('test sendPaymentRequestToApi flow', () => {
-  const sendPaymentSpy = spy(sendPaymentRequestToApi);
-  const calculateNumberSpy = stub(Utils, 'calculateNumber');
-  const consoleLogSpy = spy(console, 'log');
+  const sendPaymentSpy = sinon.spy(sendPaymentRequestToApi);
+  const calculateNumberSpy = sinon.stub(Utils, 'calculateNumber');
+  const consoleLogSpy = sinon.spy(console, 'log');
 
   calculateNumberSpy.returns(10);
   const totalAmount = sendPaymentRequestToApi(100, 20);
