@@ -1,5 +1,6 @@
 /* eslint-disable */
-const { spy } = require('sinon');
+const sinon = require('sinon');
+const spy = sinon.spy;
 const { expect } = require('chai');
 const sendPaymentRequestToApi = require('./3-payment');
 const Utils = require('./utils');
