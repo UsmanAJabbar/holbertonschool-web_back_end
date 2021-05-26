@@ -67,7 +67,7 @@ describe('calculateNumber Test', () => {
       expect(badParams).to.be.NaN;
     });
     it('Zero Divison Error', () => {
-      expect(() => calculateNumber('DIVIDE', 10, 0)).to.throw(Error, 'Error');
+      expect(calculateNumber('DIVIDE', 10, 0).toLowerCase()).to.eql('error');
     });
     it('Bad TYPE parameter', () => {
       expect(() => calculateNumber('BAD_OPERATION', 10, 2)).to.throw(TypeError);
