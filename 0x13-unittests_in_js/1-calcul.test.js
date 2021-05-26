@@ -67,7 +67,7 @@ describe('calculateNumber Test', () => {
       assert.equal(badParams, NaN);
     });
     it('Zero Divison Error', () => {
-      assert.throws(() => calculateNumber('DIVIDE', 10, 0), Error, 'Error');
+      assert.equal(calculateNumber('DIVIDE', 10.3, 0).toLowerCase(), 'error');
     });
     it('Bad TYPE parameter', () => {
       assert.throws(() => calculateNumber('BAD_OPERATION', 10, 2), TypeError);
