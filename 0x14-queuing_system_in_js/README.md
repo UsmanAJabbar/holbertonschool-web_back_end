@@ -1,1 +1,1 @@
-# JS - Queuing (Redis)
+# JS - Queuing
