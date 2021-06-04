@@ -32,7 +32,8 @@ const countStudents = (path) => {
 
     // Print necessary print statements
     console.log(`Number of students: ${totalStudents}`);
-    console.log(output.slice(0, -1));
+    const p = output.split('\n').slice(0, -1);
+    for (const str of p) console.log(str);
   } catch (e) {
     throw Error('Cannot load the database');
   }

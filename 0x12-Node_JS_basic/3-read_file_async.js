@@ -35,7 +35,10 @@ const countStudents = (path, printFlag = 1) => new Promise((resolve, reject) => 
 
         // Print necessary print statements
         output = (`Number of students: ${totalStudents}\n${output}`).slice(0, -1);
-        if (printFlag) console.log(output);
+        if (printFlag) {
+          const p = output.split('\n');
+          for (const str of p) console.log(str);
+        }
         resolve(output);
       }
     });
